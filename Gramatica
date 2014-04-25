@@ -1,0 +1,88 @@
+Gramatica
+	Conjunto de terminales
+	{ ;,=,ID,*,+,(,),({),(}),NUMBER }
+
+	Categorias gramaticales
+	{ program ,blocks,vars,statements,statement, line , point , route , lineList}
+	
+	Producciones:
+	program	
+		| blocks EOF
+		;
+	blocks
+		: vars
+		| blocks ';' route
+		;
+	vars
+		: /*empty*/
+		| vars ';' statement
+		;
+	statements
+		: statement
+		| statements ';' statement
+		;
+	statement
+		: /*empty*/
+		| 'point' point
+		| 'line' line
+		| 'line*' lineList
+		;
+	point 
+		: ID '=' point
+		|'(' NUMBER ',' NUMBER ')'
+		|ID
+		;
+	line
+		: ID '=' point ',' point
+		|ID
+		;
+	lineList
+		: ID '=' point ',' point
+		|ID
+		;
+	route
+		: ID '{' statements '}' 
+		;
+	
+Ejemplo de programa:
+
+program vuelo0123{
+	line trayectoMaritimo = (3,2),(8,9);
+	route TFM {
+		point giro = 3,3;
+		line trayectoTF1 = (4,3),giro;
+		line trayectoTF2 = giro,(6,4);
+		line* group = trayectoTF1+trayectoTF2+trayectoMaritimo;
+		line trayectoMTOA = (5,4),(5,3);
+		group = group + trayectoMTOA;
+		set group;
+	};
+	route BDC {
+		line trayectoT1 = (4,3),(6,4);
+		line* group = trayectoT1+trayectoMaritimo;
+		line trayectoMTOA = (5,4),(5,3);
+		group = group + trayectoMTOA;
+		set group;
+	};
+}
+
+
+Ejemplo de interpretación
+
+TFM
+	4,3
+	3,3
+	6,4
+	3,2
+	8,9
+	5,4
+	5,3
+END
+BDC
+	4,3
+	6,4
+	3,2
+	8,9
+	5,4
+	5,3
+END
