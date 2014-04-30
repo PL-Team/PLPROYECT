@@ -13,6 +13,6 @@ El proyecto consta de dos colaboradores listados a continuación.
 
 Se especifican todos los enlaces necesarios.
 
-Despliegue en Heroku: <http://planejs.herokuapp.com/>
-Repositorio del proyecto: <https://github.com/PL-Team/PLPROYECT/>
+* Despliegue en Heroku: <http://planejs.herokuapp.com/>
+* Repositorio del proyecto: <https://github.com/PL-Team/PLPROYECT/>
 
