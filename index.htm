@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>PLenJison</title>
-    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" charset="utf-8" />
-    <link href="lib/codemirror.css" rel="stylesheet" />
-    <script src="lib/codemirror.js"></script>
+    <title>Planalizador</title>
+    <!--<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />-->
+    <link href="codemirror.css" rel="stylesheet" />
+    <script src="codemirror.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	
   </head>
   <body>
     
@@ -21,14 +22,22 @@
         <tr>
             <td>
                 <form action="/save" method="post">
-                <textarea id="input" name="input" autofocus rows = "7">
-                   
+                <textarea id="input" name="input" autofocus rows = "7" cols = "50">
+program vuelo0123{
+	line trayectoMaritimo = (3,2),(8,9);
+	route TFM {
+		point giro = 3,3;
+		line trayectoTF1 = (4,3),giro;
+		line trayectoTF2 = giro,(6,4);
+		line* group = trayectoTF1+trayectoTF2+trayectoMaritimo;
+		line trayectoMTOA = (5,4),(5,3);
+		group = group + trayectoMTOA;
+		set group;
+	};
+}
+	
                 </textarea>
             <br/>
-            <label for="saveas">Save the code as:</label>
-            <input id="saveas" type="text" name="fname" 
-                   title="Un identificador (que no sea la palabra 'test')"
-                   pattern="^(?!test$)\w+$"/>
           </form>
         </td>
       </tr>
@@ -70,8 +79,8 @@
           viewportMargin: Infinity
         });
       </script>
-      <script type="text/javascript" src="js/calculator.js"></script>
-      <!-- <script type="text/javascript" src="js/main.js"></script>-->
+      <script type="text/javascript" src="parser.js"></script>
+      <script type="text/javascript" src="main.js"></script>
     </footer>
   </body>
 </html>

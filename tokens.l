@@ -2,11 +2,11 @@
 
 %{
     var reserved_words = {
-	PROGRAM: 'program'
-	LINE: 'line'
-	POINT: 'point'
-	SET: 'set' 
-	ROUTE: 'route'
+		PROGRAM: 'program',
+		LINE: 'line',
+		POINT: 'point',
+		SET: 'set' ,
+		ROUTE: 'route'
     }
 
     function idORrw(x) {
@@ -24,6 +24,7 @@
 
 \b[a-zA-Z_]\w*\b return idORrw(yytext)
 \b[0-9]+\b return 'NUMBER'
+'*' return 'KLEEN'
 '{' return 'LLAVE_IZK'
 '}' return 'LLAVE_DER'
 ',' return 'COMMA'

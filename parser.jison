@@ -1,13 +1,14 @@
 /* Reglas de precedencia */
 
 %right ASSIGN
-%left '+' '-'
+%right '*'
+%left '+'
 
 %right THEN ELSE
 
 /* Declaración de tokens */
 
-%token EOF  END_SENTENCE COMMA ID ASSIGN PROGRAM LINE POINT     
+%token EOF  END_SENTENCE COMMA ID ASSIGN PROGRAM LINE POINT KLEEN    
 %token PAR_IZK PAR_DER NUMBER LLAVE_IZK LLAVE_DER  SET ROUTE
 
 %start program
@@ -17,40 +18,58 @@
 %%
 
 program
-  : ID blocks EOF
+  : PROGRAM ID LLAVE_IZK  vars  LLAVE_DER EOF
     {
-      return $1;
+		$$ = $1; 
+        console.log($$);
+        return $$;
     }
+  ;
+vars
+  : blocks
+  | linea blocks
   ;
 
 blocks
-  : LLAVE_IZK line statements
-  | LLAVE_IZK route statements
-  | LLAVE_DER
+  : ruta blocks
+  | /*empty*/
   ;
 
-/* statements
-  : statement
-  | statement END_SENTENCE statement
-  ;
-
-statement
-  : /*empty *"/
-  | point END_SENTENCE 
-*/
-
-line
-  : ID ASSIGN point
+linea
+  : LINE ID ASSIGN punto
+  | LINE '*' ID ASSIGN linelist
   | ID 
   ;
 
-point
-  : ID ASSIGN punto
-  | PAR_IZK NUMBER COMMA NMBER PAR_DER
-  | ID
+linelist
+  : ID '+' linelist
+  {
+	$$ = {
+		type: 'linelist',
+	};
+  }
+  | ID END_SENTENCE
+  ;
+  
+
+
+punto
+  : POINT ID ASSIGN punto
+  | PAR_IZK NUMBER COMMA NUMBER PAR_DER COMMA punto
+  | PAR_IZK NUMBER COMMA NUMBER PAR_DER END_SENTENCE
+  | NUMBER COMMA NUMBER END_SENTENCE
+  | ID COMMA punto
+  | ID END_SENTENCE
   ;
 
-route
-  :ID blocks
+ruta
+  : ROUTE ID LLAVE_IZK sentencias LLAVE_DER END_SENTENCE
   ;
 
+sentencias
+  : punto sentencias
+  | linea sentencias
+  | ID ASSIGN linelist sentencias
+  | SET ID END_SENTENCE sentencias
+  | /*empty*/
+  ;
