@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PLenJison</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" charset="utf-8" />
+    <link href="lib/codemirror.css" rel="stylesheet" />
+    <script src="lib/codemirror.js"></script>
+  </head>
+  <body>
+    
+    <section>
+
+<div id="content" align="center">
+    <table class="loadfile" style="background: white;">
+        <tr>
+            <td>
+                <input type="file" id="examples" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form action="/save" method="post">
+                <textarea id="input" name="input" autofocus rows = "7">
+                   
+                </textarea>
+            <br/>
+            <label for="saveas">Save the code as:</label>
+            <input id="saveas" type="text" name="fname" 
+                   title="Un identificador (que no sea la palabra 'test')"
+                   pattern="^(?!test$)\w+$"/>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td><button class="mylink" id="parse" type="button">Parsear la entrada</button></td>
+      </tr>
+    </table>
+  </p>
+
+
+
+
+  <div class="hidden" id="out">
+    <table class="ini">
+      <thead>
+      </thead>
+      <tbody class="scrollContent">
+        <tr>
+          <td>
+            <div class="output"><!-- Output goes here! --> 
+              <pre>
+                <span id="output"></span>
+              </pre>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+	  
+	  
+    </section>
+    <footer>
+      <script>
+        var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("input"), {
+          lineNumbers: true,
+          viewportMargin: Infinity
+        });
+      </script>
+      <script type="text/javascript" src="js/calculator.js"></script>
+      <!-- <script type="text/javascript" src="js/main.js"></script>-->
+    </footer>
+  </body>
+</html>
