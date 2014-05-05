@@ -45,12 +45,16 @@ Gramatica
 		;
 	
 Ejemplo de programa:
-
+//program
 program vuelo0123{
+//vars
 	line trayectoMaritimo = (3,2),(8,9);
+//
+//RUTAS
 	route TFM {
 		point giro = 3,3;
-		line trayectoTF1 = (4,3),giro;
+		line trayectoTF1;
+		= (4,3),giro;
 		line trayectoTF2 = giro,(6,4);
 		line* group = trayectoTF1+trayectoTF2+trayectoMaritimo;
 		line trayectoMTOA = (5,4),(5,3);

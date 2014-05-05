@@ -24,13 +24,12 @@
 
 \b[a-zA-Z_]\w*\b return idORrw(yytext)
 \b[0-9]+\b return 'NUMBER'
-'*' return 'KLEEN'
-'{' return 'LLAVE_IZK'
-'}' return 'LLAVE_DER'
+'{' return 'LLAVE_OPEN'
+'}' return 'LLAVE_CLOSE'
 ',' return 'COMMA'
 ';' return 'END_SENTENCE'
-'(' return 'PAR_IZK'
-')' return 'PAR_DER'
+'(' return 'PAR_OPEN'
+')' return 'PAR_CLOSE'
 
 <<EOF>> return 'EOF'
 

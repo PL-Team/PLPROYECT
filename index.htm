@@ -16,27 +16,38 @@
     <table class="loadfile" style="background: white;">
         <tr>
             <td>
-                <input type="file" id="examples" />
-            </td>
-        </tr>
-        <tr>
-            <td>
                 <form action="/save" method="post">
                 <textarea id="input" name="input" autofocus rows = "7" cols = "50">
 program vuelo0123{
-	line trayectoMaritimo = (3,2),(8,9);
-	route TFM {
-		point giro = 3,3;
-		line trayectoTF1 = (4,3),giro;
-		line trayectoTF2 = giro,(6,4);
-		line* group = trayectoTF1+trayectoTF2+trayectoMaritimo;
-		line trayectoMTOA = (5,4),(5,3);
-		group = group + trayectoMTOA;
-		set group;
-	};
+    line trayectoMaritimo;
+    trayectoMaritimo = (3,2),(8,9);
+    route TFM {
+        point giro;
+        giro = 3,3;
+        line trayectoTF1;
+        trayectoTF1 = (4,3),giro;
+        line trayectoTF2;
+        trayectoTF2 = giro,(6,4);
+        line* group;
+        group = trayectoTF1+trayectoTF2+trayectoMaritimo;
+        line trayectoMTOA;
+        trayectoMTOA = (5,4),(5,3);
+        group = group + trayectoMTOA;
+        set group;
+    };
+    route BDC {
+        line trayectoT1;
+        trayectoT1 = (4,3),(6,4);
+        line* group;
+        group = trayectoT1+trayectoMaritimo;
+        line trayectoMTOA;
+        trayectoMTOA = (5,4),(5,3);
+        group = group + trayectoMTOA;
+        set group;
+    };
 }
-	
-                </textarea>
+
+</textarea>
             <br/>
           </form>
         </td>
