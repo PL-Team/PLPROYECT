@@ -1,3 +1,16 @@
+/* Symbol table */
+
+%{
+var point_table = [];
+var line_table = [];
+
+
+function upIndex(){
+	index++;
+}
+
+%}
+
 /* Reglas de precedencia */
 
 %right ASSIGN
@@ -61,7 +74,7 @@ ruta
 set_r
 : SET ID END_SENTENCE
 {
-
+  
 }
 ;
 rutas
@@ -86,10 +99,12 @@ staments
 stament
 : POINT ID
 {
+    point_table[$2]={x:'null',y:'null'};
     $$ = {
     type: 'POINT',
     id: $2
     };
+
 }
 | LINE '*' ID
 {
@@ -107,11 +122,16 @@ stament
 }
 | ID ASSIGN expression
 {
+    
     $$ = {
     type: '=',
     right: $1,
     left: $3
     };
+    if ($3.type == "POINT"){
+ 	point_table[$1].x = $3.x;
+ 	point_table[$1].y = $3.y;
+    }
 }
 ;
 expression
@@ -165,6 +185,7 @@ expression_l
 punto
 : NUMBER COMMA NUMBER
 {
+    
     $$ = {
     type: 'POINT',
     x: $1,
