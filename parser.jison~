@@ -142,24 +142,20 @@ expression_id
 expression_p
 : punto
 | expression_p '+' punto
-{
     $$ = {
     type: '+',
     right: $1,
     left: $3
     };
-}
 ;
 expression_l
 : linea
 | expression_l '+' linea
-{
     $$ = {
     type: '+',
     right: $1,
     left: $3
     };
-}
 ;
 
 punto
