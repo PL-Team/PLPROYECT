@@ -138,6 +138,7 @@ case 10:
 
 break;
 case 11:
+    list_table[$$[$0]]={line:[]};
     this.$ = {
     type: 'LINE*',
     id: $$[$0]
@@ -145,6 +146,7 @@ case 11:
 
 break;
 case 12:
+    line_table[$$[$0]]={ini:'null',fin:'null'};
     this.$ = {
     type: 'LINE',
     id: $$[$0]
@@ -161,7 +163,11 @@ case 13:
     if ($$[$0].type == "POINT"){
  	point_table[$$[$0-2]].x = $$[$0].x;
  	point_table[$$[$0-2]].y = $$[$0].y;
-	throw new Error(JSON.stringify(point_table[$$[$0-2]]));
+    }else if($$[$0].type == "LINE"){
+	line_table[$$[$0-2]].ini = {x: $$[$0].start.x, y: $$[$0].start.y};
+	line_table[$$[$0-2]].fin = {x: $$[$0].end.x, y: $$[$0].end.y};
+    }else if ($$[$0].type == "LINE*"){
+	list_table[$$[$0-2]].line.push({});
     }
 
 break;
@@ -175,13 +181,43 @@ case 15:
 break;
 case 16:
     this.$ = $$[$0];
+    
+
+break;
+case 17: 
+
 
 break;
 case 18:
+	
     this.$ = {
     type: '+',
-    right: $$[$0-2],
-    left: $$[$0]
+    right: {
+	id:$$[$0-2],
+	inicio:{
+		x:line_table[trayectoMaritimo].ini.x,
+		y:'null'
+	
+	},
+	fin:{
+		x:'null',
+		y:'null'
+	}
+	
+    },
+    left: {
+	id:$$[$0],
+	inicio:{
+		x:line_table[$$[$0]].ini.x,
+		y:line_table[$$[$0]].ini.y
+	
+	},
+	fin:{
+		x:line_table[$$[$0]].fin.x,
+		y:line_table[$$[$0]].fin.y
+	}
+	
+    }
     };
 
 break;
@@ -203,7 +239,6 @@ case 22:
 break;
 case 23:
     
-//    throw new Error(JSON.stringify(point_table[index].x));
     this.$ = {
     type: 'POINT',
     x: $$[$0-2],
@@ -223,14 +258,24 @@ case 25:
     this.$ = {
     type: 'LINE',
     start: $$[$0-3],
-    end: $$[$0]
+    //end: $$[$0]        //change ID for point.
+    end: {
+	type: 'POINT',
+    	x: point_table[$$[$0]].x,
+  	y: point_table[$$[$0]].y
+    }
     };
 
 break;
 case 26:
     this.$ = {
     type: 'LINE',
-    start: $$[$0-4],
+    //start: $$[$0-4], CHANGE ID FOR POINT
+    start: {
+	type: 'POINT',
+    	x: point_table[$$[$0-4]].x,
+  	y: point_table[$$[$0-4]].y
+    },
     end: $$[$0-1]
     };
 
@@ -376,6 +421,7 @@ parse: function parse(input) {
 
 var point_table = [];
 var line_table = [];
+var list_table = [];
 
 
 function upIndex(){

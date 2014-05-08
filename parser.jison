@@ -3,6 +3,7 @@
 %{
 var point_table = [];
 var line_table = [];
+var list_table = [];
 
 
 function upIndex(){
@@ -108,6 +109,7 @@ stament
 }
 | LINE '*' ID
 {
+    list_table[$3]={line:[]};
     $$ = {
     type: 'LINE*',
     id: $3
@@ -115,6 +117,7 @@ stament
 }
 | LINE ID
 {
+    line_table[$2]={ini:'null',fin:'null'};
     $$ = {
     type: 'LINE',
     id: $2
@@ -131,6 +134,11 @@ stament
     if ($3.type == "POINT"){
  	point_table[$1].x = $3.x;
  	point_table[$1].y = $3.y;
+    }else if($3.type == "LINE"){
+	line_table[$1].ini = {x: $3.start.x, y: $3.start.y};
+	line_table[$1].fin = {x: $3.end.x, y: $3.end.y};
+    }else if ($3.type == "LINE*"){
+	list_table[$1].line.push({});
     }
 }
 ;
@@ -146,16 +154,46 @@ expression
 | expression_l
 {
     $$ = $1;
+    
 }
 ;
+
 expression_id
 : ID
+{ 
+
+}
 | expression_id '+' ID
 {
+	
     $$ = {
     type: '+',
-    right: $1,
-    left: $3
+    right: {
+	id:$1,
+	inicio:{
+		x:'null',
+		y:'null'
+	
+	},
+	fin:{
+		x:'null',
+		y:'null'
+	}
+	
+    },
+    left: {
+	id:$3,
+	inicio:{
+		x:line_table[$3].ini.x,
+		y:line_table[$3].ini.y
+	
+	},
+	fin:{
+		x:line_table[$3].fin.x,
+		y:line_table[$3].fin.y
+	}
+	
+    }
     };
 }
 ;
@@ -208,14 +246,24 @@ linea
     $$ = {
     type: 'LINE',
     start: $2,
-    end: $5
+    //end: $5        //change ID for point.
+    end: {
+	type: 'POINT',
+    	x: point_table[$5].x,
+  	y: point_table[$5].y
+    }
     };
 }
 | ID COMMA PAR_OPEN punto PAR_CLOSE
 {
     $$ = {
     type: 'LINE',
-    start: $1,
+    //start: $1, CHANGE ID FOR POINT
+    start: {
+	type: 'POINT',
+    	x: point_table[$1].x,
+  	y: point_table[$1].y
+    },
     end: $4
     };
 }
