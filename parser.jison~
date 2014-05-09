@@ -163,38 +163,41 @@ expression_id
 { 
 
 }
-| expression_id '+' ID
+| expression_id '+' expression_id
 {
+    if(!line_table[$1]){
+	    $$ = $1;throw new Error(JSON.stringify($1)+JSON.stringify($1)+);
+    }else{
+	    $$ = {
+	    type: '+',
+	    right: {
+		id:$1,
+		inicio:{
+			x: line_table[$1].ini.x,
+			y: line_table[$1].ini.y
 	
-    $$ = {
-    type: '+',
-    right: {
-	id:$1,
-	inicio:{
-		x:line_table[trayectoMaritimo].ini.x,
-		y:'null'
+		},
+		fin:{
+			x: line_table[$1].fin.x,
+			y: line_table[$1].fin.y
+		}
 	
-	},
-	fin:{
-		x:'null',
-		y:'null'
-	}
+	    },
+	    left: {
+		id:$3,
+		inicio:{
+			x:line_table[$3].ini.x,
+			y:line_table[$3].ini.y
 	
-    },
-    left: {
-	id:$3,
-	inicio:{
-		x:line_table[$3].ini.x,
-		y:line_table[$3].ini.y
+		},
+		fin:{
+			x:line_table[$3].fin.x,
+			y:line_table[$3].fin.y
+		}
 	
-	},
-	fin:{
-		x:line_table[$3].fin.x,
-		y:line_table[$3].fin.y
-	}
-	
+	    }
+	    };
     }
-    };
 }
 ;
 expression_p
