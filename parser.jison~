@@ -1,15 +1,11 @@
+//TODO: borrar Line* establecer FINAL como palabra reservada y crear los estado oportunos para que funcione.
+
 /* Symbol table */
 
 %{
 var point_table = [];
 var line_table = [];
 var list_table = [];
-
-
-function upIndex(){
-	index++;
-}
-
 %}
 
 /* Reglas de precedencia */
@@ -22,7 +18,7 @@ function upIndex(){
 
 /* Declaración de tokens */
 
-%token EOF  END_SENTENCE COMMA ID ASSIGN PROGRAM LINE POINT
+%token EOF  END_SENTENCE COMMA ID ASSIGN PROGRAM LINE POINT FINAL
 %token PAR_OPEN PAR_CLOSE NUMBER LLAVE_OPEN LLAVE_CLOSE  SET ROUTE
 
 %start program
@@ -73,9 +69,19 @@ ruta
 }
 ;
 set_r
-: SET ID END_SENTENCE
+: SET expression_id END_SENTENCE
 {
-  
+    var retorno = [];
+    for (var i=0;i<list_table.length; i++){
+	retorno.push(line_table[list_table[i]].ini);
+	retorno.push(line_table[list_table[i]].fin);
+    }
+    list_table = [];
+    $$ = {
+    value: retorno
+    };
+
+
 }
 ;
 rutas
@@ -107,14 +113,7 @@ stament
     };
 
 }
-| LINE '*' ID
-{
-    list_table[$3]={line:[]};
-    $$ = {
-    type: 'LINE*',
-    id: $3
-    };
-}
+
 | LINE ID
 {
     line_table[$2]={ini:'null',fin:'null'};
@@ -123,6 +122,7 @@ stament
     id: $2
     };
 }
+
 | ID ASSIGN expression
 {
     
@@ -137,8 +137,6 @@ stament
     }else if($3.type == "LINE"){
 	line_table[$1].ini = {x: $3.start.x, y: $3.start.y};
 	line_table[$1].fin = {x: $3.end.x, y: $3.end.y};
-    }else if ($3.type == "LINE*"){
-	list_table[$1].line.push({});
     }
 }
 ;
@@ -160,46 +158,33 @@ expression
 
 expression_id
 : ID
-{ 
+{
+ 
+   $$ = {
+   id: $1,
+   inicio:{
+	x:line_table[$1].ini.x,
+	y:line_table[$1].ini.y
+   },
+   fin:{
+	x:line_table[$1].fin.x,
+	y:line_table[$1].fin.y
+   }
+   };
+   list_table.push([$1]);
 
 }
 | expression_id '+' expression_id
 {
-    if(!line_table[$1]){
-	    $$ = $1;throw new Error(JSON.stringify($1)+JSON.stringify($1)+);
-    }else{
-	    $$ = {
-	    type: '+',
-	    right: {
-		id:$1,
-		inicio:{
-			x: line_table[$1].ini.x,
-			y: line_table[$1].ini.y
-	
-		},
-		fin:{
-			x: line_table[$1].fin.x,
-			y: line_table[$1].fin.y
-		}
-	
-	    },
-	    left: {
-		id:$3,
-		inicio:{
-			x:line_table[$3].ini.x,
-			y:line_table[$3].ini.y
-	
-		},
-		fin:{
-			x:line_table[$3].fin.x,
-			y:line_table[$3].fin.y
-		}
-	
-	    }
-	    };
-    }
+   $$ = {
+   type: '+',
+   right: $1,
+   left: $3
+
+   };
 }
 ;
+
 expression_p
 : punto
 | expression_p '+' punto

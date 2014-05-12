@@ -30,19 +30,16 @@ program vuelo0123{
         trayectoTF2 = giro,(6,4);              
         line trayectoMTOA;
         trayectoMTOA = (5,4),(5,3);
-        line* group;
-        group = trayectoTF1+trayectoTF2+trayectoMaritimo+trayectoMTOA;
-        set group;
+        final = trayectoTF1+trayectoTF2+trayectoMaritimo+trayectoMTOA;
+        set;
     };
     route BDC {
         line trayectoT1;
         trayectoT1 = (4,3),(6,4);
-        line* group;
-        group = trayectoT1+trayectoMaritimo;
         line trayectoMTOA;
-        trayectoMTOA = (5,4),(5,3);
-        group = group + trayectoMTOA;
-        set group;
+        trayectoMTOA = (5,4),(5,3);        
+        final = trayectoT1+trayectoMaritimo+ trayectoMTOA;
+        set;
     };
 }
 
