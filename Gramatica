@@ -16,7 +16,7 @@ Gramatica
 		: staments rutas
 		;
 	ruta
-		:ROUTE ID LLAVE_OPEN saments set_r LLAVE_CLOSE END_SENTENCE
+		:ROUTE ID LLAVE_OPEN staments set_r LLAVE_CLOSE END_SENTENCE
 		;
 	set_r
 		: SET expression_id END_SENTENCE
