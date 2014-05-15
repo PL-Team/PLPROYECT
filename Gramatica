@@ -7,86 +7,55 @@ Gramatica
 	
 	Producciones:
 	program	
-		| blocks EOF
+		: flight EOF
+		;
+	flight
+		:PROGRAM ID LLAVE_OPEN blocks LLAVE_CLOSE
 		;
 	blocks
-		: vars
-		| blocks ';' route
+		: staments rutas
 		;
-	vars
-		: /*empty*/
-		| vars ';' statement
+	ruta
+		:ROUTE ID LLAVE_OPEN saments set_r LLAVE_CLOSE END_SENTENCE
 		;
-	statements
-		: statement
-		| statements ';' statement
+	set_r
+		: SET expression_id END_SENTENCE
 		;
-	statement
-		: /*empty*/
-		| 'point' point
-		| 'line' line
-		| 'line*' lineList
+	rutas
+		: ruta rutas
+		;	
+	staments
+		: /* empty */
+		| stament END_SENTECE stament
 		;
-	point 
-		: ID '=' point
-		|'(' NUMBER ',' NUMBER ')'
-		|ID
+	stament
+		: POINT ID
+		| LINE ID
+		| ID ASSIGN expression
 		;
-	line
-		: ID '=' point ',' point
-		|ID
+	expression
+		: expression_id
+		| expression_p
+		| expression_l
 		;
-	lineList
-		: ID '=' point ',' point
-		|ID
+	expression_id
+		: ID
+		| expression_id '+' expression_id
 		;
-	route
-		: ID '{' statements '}' 
+	expression_p
+		: punto
+		;
+	expression_l
+		: linea
 		;
 	
-Ejemplo de programa:
-//program
-program vuelo0123{
-//vars
-	line trayectoMaritimo = (3,2),(8,9);
-//
-//RUTAS
-	route TFM {
-		point giro = 3,3;
-		line trayectoTF1;
-		= (4,3),giro;
-		line trayectoTF2 = giro,(6,4);
-		line* group = trayectoTF1+trayectoTF2+trayectoMaritimo;
-		line trayectoMTOA = (5,4),(5,3);
-		group = group + trayectoMTOA;
-		set group;
-	};
-	route BDC {
-		line trayectoT1 = (4,3),(6,4);
-		line* group = trayectoT1+trayectoMaritimo;
-		line trayectoMTOA = (5,4),(5,3);
-		group = group + trayectoMTOA;
-		set group;
-	};
-}
+	punto
+		: NUMBER COMMA NUMBER
+		;
+	linea
+		: PAR_OPEN punto PAR_CLOSE COMMA PAR_OPEN punto PAR_CLOSE
+		| PAR_OPEN  punto PAR_CLOSE COMMA ID
+		| ID COMMA PAR_OPEN punto PAR_CLOSE
+		;
+	
 
-
-Ejemplo de interpretación
-
-TFM
-	4,3
-	3,3
-	6,4
-	3,2
-	8,9
-	5,4
-	5,3
-END
-BDC
-	4,3
-	6,4
-	3,2
-	8,9
-	5,4
-	5,3
-END
