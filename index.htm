@@ -68,26 +68,27 @@
                 <textarea id="input" name="input" autofocus rows = "7" cols = "50">
 program vuelo0123{
     line trayectoMaritimo;
-    trayectoMaritimo = (3,2),(8,9);
+    trayectoMaritimo = (100,123),(200,200);
     route TFM {
         point giro;
-        giro = 3,3;
+        giro = 10,10;
         line trayectoTF1;
-        trayectoTF1 = (4,3),giro;
+        trayectoTF1 = (10,179),giro;
         line trayectoTF2;
-        trayectoTF2 = giro,(6,4);              
+        trayectoTF2 = giro,(203,15);              
         line trayectoMTOA;
-        trayectoMTOA = (5,4),(5,3);
+        trayectoMTOA = (102,67),(34,92);
         set  trayectoTF1+trayectoTF2+trayectoMaritimo+trayectoMTOA;        
     };
     route BDC {
         line trayectoT1;
-        trayectoT1 = (4,3),(6,4);
+        trayectoT1 = (98,33),(64,44);
         line trayectoMTOA;
-        trayectoMTOA = (5,4),(5,3);        
+        trayectoMTOA = (150,40),(115,200);        
         set trayectoT1+trayectoMaritimo+ trayectoMTOA;
     };
 }
+
 
 
 </textarea>
@@ -96,7 +97,8 @@ program vuelo0123{
         </td>
       </tr>
       <tr>
-        <td><button class="mylink" id="parse" type="button">Parsear la entrada</button></td>
+        <td><button class="mylink" id="parse" type="button">Parsear la entrada</button>
+      	<button class="mylink" id="download" type="button">Descargar archivo .plane</button></td>
       </tr>
     </table>
   </p>
