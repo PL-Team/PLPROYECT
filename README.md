@@ -13,8 +13,8 @@ El proyecto consta de dos colaboradores listados a continuación.
 
 Se especifican todos los enlaces necesarios.
 
-* Despliegue en Web: [http://www.dionizdev.com/](Web)
-* Repositorio del proyecto: [https://github.com/PL-Team/PLPROYECT/](Repositorio)
+* Despliegue en Web: [Web](http://www.dionizdev.com/)
+* Repositorio del proyecto: [Repositorio](https://github.com/PL-Team/PLPROYECT/)
 
 # Ejemplo de programa:
 //PRGRAMA
