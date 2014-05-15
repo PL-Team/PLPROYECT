@@ -13,7 +13,7 @@ El proyecto consta de dos colaboradores listados a continuación.
 
 Se especifican todos los enlaces necesarios.
 
-* Despliegue en Heroku: <http://planejs.herokuapp.com/>
+* Despliegue en Web: [http://www.dionizdev.com/]Web
 * Repositorio del proyecto: <https://github.com/PL-Team/PLPROYECT/>
 
 # Ejemplo de programa:
