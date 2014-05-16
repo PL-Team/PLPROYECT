@@ -12,7 +12,7 @@ Es un simulador de los ficheros generados por el parser PlaneJS , en el se puede
 Una vez realizada la generación del fichero en la [web](http://dionizdev.com) se necesita descargar los ficheros que esta rama contienen , tener derechos para la ejecución . usar el comando
 
 ```bash
- java -jar PL.jar 
+$ java -jar PL.jar 
 
 Una vez ejecutado , seguir los pasos.
 - Seleccionar el fichero descargado de la web.
@@ -20,15 +20,3 @@ Una vez ejecutado , seguir los pasos.
 - Observar la simulaciín y disfrutar del vuelo.
 
 
-$ tree
-
-.
-├── Gemfile
-├── lib
-│   ├── Matriz
-│   │   └── version.rb
-│   └── Matriz.rb
-├── LICENSE.txt
-├── Matriz.gemspec
-├── Rakefile
-└── README.md
