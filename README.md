@@ -13,7 +13,7 @@ Una vez realizada la generación del fichero en la [web](http://dionizdev.com) s
 
 ```bash
 $ java -jar PL.jar 
-
+```
 Una vez ejecutado , seguir los pasos.
 - Seleccionar el fichero descargado de la web.
 - Indicar una de las rutas cargadas.
